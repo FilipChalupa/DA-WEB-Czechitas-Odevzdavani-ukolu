@@ -15,7 +15,7 @@ export default function Home({
 
 			<h1 className={styles.title}>Odevzdávání úkolů</h1>
 			<p>
-				Id kurzu: <b>{courseId}</b>
+				Klíč kurzu: <b>{courseId}</b>
 			</p>
 		</div>
 	)
