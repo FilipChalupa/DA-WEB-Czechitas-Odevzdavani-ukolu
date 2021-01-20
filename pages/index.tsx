@@ -1,8 +1,11 @@
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({
+	courseId,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -12,6 +15,8 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>Odevzdávání úkolů</h1>
+
+				<p>Id kurzu: {courseId}</p>
 
 				<p className={styles.description}>
 					Get started by editing{' '}
@@ -61,4 +66,12 @@ export default function Home() {
 			</footer>
 		</div>
 	)
+}
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+	return {
+		props: {
+			courseId: process.env.COURSE_ID || '',
+		},
+	}
 }
