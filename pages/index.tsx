@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core'
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import React from 'react'
@@ -17,6 +18,9 @@ export default function Home({
 			<p>
 				Klíč kurzu: <b>{courseId}</b>
 			</p>
+			<Button color="primary" variant="contained">
+				Hello World
+			</Button>
 		</div>
 	)
 }
