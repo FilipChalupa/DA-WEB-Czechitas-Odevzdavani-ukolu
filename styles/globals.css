@@ -1,6 +1,13 @@
 :root {
 	--background-color: #eeeeee;
 	--text-color: #000000;
+	--spacing: 16px;
+}
+
+@media (min-width: 600px) {
+	body {
+		--spacing: 24px;
+	}
 }
 
 @media (prefers-color-scheme: dark) {

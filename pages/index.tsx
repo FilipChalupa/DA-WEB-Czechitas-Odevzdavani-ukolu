@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import React from 'react'
@@ -14,7 +14,7 @@ export default function Home({
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<h1 className={styles.title}>Odevzdávání úkolů</h1>
+			<Typography variant="h3">Odevzdávání úkolů</Typography>
 			<p>
 				Klíč kurzu: <b>{courseId}</b>
 			</p>
