@@ -1,7 +1,8 @@
-import { Button, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import React from 'react'
+import { SignInWithGithubButton } from '../components/SignInWithGithubButton'
 import styles from '../styles/Home.module.css'
 
 export default function Home({
@@ -14,13 +15,11 @@ export default function Home({
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<Typography variant="h3">Odevzdávání úkolů</Typography>
+			<Typography variant="h3">Přihlášení</Typography>
 			<p>
 				Klíč kurzu: <b>{courseId}</b>
 			</p>
-			<Button color="primary" variant="contained">
-				Hello World
-			</Button>
+			<SignInWithGithubButton />
 		</div>
 	)
 }
