@@ -2,12 +2,12 @@ import { Typography } from '@material-ui/core'
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import React from 'react'
+import { get } from 'typesaurus'
 import { SignInWithGithubButton } from '../components/SignInWithGithubButton'
 import styles from '../styles/Home.module.css'
-import { db } from '../utils/firebase'
+import { coursesCollection } from '../utils/db'
 
 export default function Home({
-	courseId,
 	course,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
@@ -17,11 +17,10 @@ export default function Home({
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<Typography variant="h3">{course?.name}</Typography>
-			<Typography variant="h4">Přihlášení</Typography>
-			<p>
-				Klíč kurzu: <b>{courseId}</b>
-			</p>
+			<Typography variant="h3">Přihlášení</Typography>
+			<Typography variant="h4" gutterBottom>
+				{course.name}
+			</Typography>
 			<SignInWithGithubButton />
 		</div>
 	)
@@ -29,13 +28,15 @@ export default function Home({
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
 	const courseId = process.env.COURSE_ID || ''
-	const courseRef = db.collection('courses').doc(courseId)
-	const course = await courseRef.get()
+	const course = (await get(coursesCollection, courseId))?.data
+
+	if (course === undefined) {
+		throw Error('Course not found.')
+	}
 
 	return {
 		props: {
-			courseId,
-			course: course.data(),
+			course,
 		},
 	}
 }
