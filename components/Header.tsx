@@ -1,16 +1,23 @@
-import { AppBar, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Avatar, Toolbar, Typography } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
+import { useUser } from '../contexts/UserContext'
+import s from './Header.module.css'
 
 export const Header: React.FunctionComponent = () => {
+	const user = useUser()
+
 	return (
 		<AppBar position="static" color="inherit">
 			<Toolbar>
-				<Link href="/">
-					<a>
-						<Typography variant="h5">Odevzdávání úkolů</Typography>
-					</a>
-				</Link>
+				<div className={s.main}>
+					<Link href="/">
+						<a>
+							<Typography variant="h5">Odevzdávání úkolů</Typography>
+						</a>
+					</Link>
+				</div>
+				{user && <Avatar src={user.avatar || undefined} />}
 			</Toolbar>
 		</AppBar>
 	)

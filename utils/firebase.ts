@@ -19,3 +19,5 @@ const app =
 export const firebaseAuth = app.auth()
 
 export const firebaseAuthGithubProvider = new firebase.auth.GithubAuthProvider()
+
+export { firebase }

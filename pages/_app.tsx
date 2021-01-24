@@ -3,6 +3,7 @@ import { get } from 'typesaurus'
 import { Layout } from '../components/Layout'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { CourseContextProvider } from '../contexts/CourseContext'
+import { UserContextProvider } from '../contexts/UserContext'
 import '../styles/globals.css'
 import '../styles/hidingHeader.css'
 import { coursesCollection } from '../utils/db'
@@ -16,9 +17,11 @@ function MyApp({
 	return (
 		<ThemeProvider>
 			<CourseContextProvider course={course}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+				<UserContextProvider>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</UserContextProvider>
 			</CourseContextProvider>
 		</ThemeProvider>
 	)
