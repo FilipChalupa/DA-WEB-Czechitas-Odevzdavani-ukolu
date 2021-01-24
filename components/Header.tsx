@@ -17,7 +17,11 @@ export const Header: React.FunctionComponent = () => {
 						</a>
 					</Link>
 				</div>
-				{user && <Avatar src={user.avatar || undefined} />}
+				{user && (
+					<a href={`https://github.com/${user.githubUsername}`}>
+						<Avatar src={user.avatar || undefined} />
+					</a>
+				)}
 			</Toolbar>
 		</AppBar>
 	)
