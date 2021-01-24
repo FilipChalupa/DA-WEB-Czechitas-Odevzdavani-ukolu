@@ -24,21 +24,34 @@ function MyApp({
 	)
 }
 
+async function getOnlyOnceOnServer<T>(
+	key: string,
+	getter: () => Promise<T>,
+): Promise<T> {
+	if ('window' in globalThis) {
+		return window.__NEXT_DATA__.props[key] as Exclude<T, undefined>
+	}
+	return getter()
+}
+
 const getInitialProps = async (context: AppContext) => {
 	const appProps = await App.getInitialProps(context)
 
-	const courseId = process.env.COURSE_ID || ''
-	const course = (await get(coursesCollection, courseId))?.data
-	if (course === undefined) {
-		throw Error('Course not found.')
-	}
+	const course = await getOnlyOnceOnServer('course', async () => {
+		const courseId = process.env.COURSE_ID || ''
+		const course = (await get(coursesCollection, courseId))?.data
+		if (course === undefined) {
+			throw Error('Course not found.')
+		}
+		return {
+			id: courseId,
+			...course,
+		}
+	})
 
 	return {
 		...appProps,
-		course: {
-			id: courseId,
-			...course,
-		},
+		course,
 	}
 }
 
