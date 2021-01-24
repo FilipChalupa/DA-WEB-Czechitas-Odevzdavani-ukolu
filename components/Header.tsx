@@ -1,4 +1,10 @@
-import { AppBar, Avatar, Toolbar, Typography } from '@material-ui/core'
+import {
+	AppBar,
+	Avatar,
+	Container,
+	Toolbar,
+	Typography,
+} from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
 import { useUser } from '../contexts/UserContext'
@@ -9,20 +15,22 @@ export const Header: React.FunctionComponent = () => {
 
 	return (
 		<AppBar position="static" color="inherit">
-			<Toolbar>
-				<div className={s.main}>
-					<Link href="/">
-						<a>
-							<Typography variant="h5">Odevzdávání úkolů</Typography>
+			<Container disableGutters>
+				<Toolbar>
+					<div className={s.main}>
+						<Link href="/">
+							<a>
+								<Typography variant="h5">Odevzdávání úkolů</Typography>
+							</a>
+						</Link>
+					</div>
+					{user && (
+						<a href={`https://github.com/${user.githubUsername}`}>
+							<Avatar src={user.avatar || undefined} />
 						</a>
-					</Link>
-				</div>
-				{user && (
-					<a href={`https://github.com/${user.githubUsername}`}>
-						<Avatar src={user.avatar || undefined} />
-					</a>
-				)}
-			</Toolbar>
+					)}
+				</Toolbar>
+			</Container>
 		</AppBar>
 	)
 }

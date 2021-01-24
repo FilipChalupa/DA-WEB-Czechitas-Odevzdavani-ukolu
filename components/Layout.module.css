@@ -3,5 +3,5 @@
 }
 
 .main {
-	padding: calc(var(--spacing) + 8px) var(--spacing);
+	padding: calc(var(--spacing) + 8px) 0;
 }
