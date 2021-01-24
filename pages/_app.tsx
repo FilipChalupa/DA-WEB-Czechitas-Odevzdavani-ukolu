@@ -24,7 +24,7 @@ function MyApp({
 	)
 }
 
-export const getInitialProps = async (context: AppContext) => {
+const getInitialProps = async (context: AppContext) => {
 	const appProps = await App.getInitialProps(context)
 
 	const courseId = process.env.COURSE_ID || ''

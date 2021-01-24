@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core'
 import GitHubIcon from '@material-ui/icons/GitHub'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { set } from 'typesaurus'
 import { useCourse } from '../contexts/CourseContext'
@@ -8,6 +9,7 @@ import { firebaseAuth, firebaseAuthGithubProvider } from '../utils/firebase'
 
 export const SignInWithGithubButton: React.FunctionComponent = () => {
 	const courseId = useCourse().id
+	const router = useRouter()
 
 	const signIn = React.useCallback(async () => {
 		const result = await firebaseAuth.signInWithPopup(
@@ -29,6 +31,7 @@ export const SignInWithGithubButton: React.FunctionComponent = () => {
 		}
 
 		await set(studentsCollection(courseId), userId, userData)
+		router.push('/dashboard')
 	}, [])
 
 	return (
