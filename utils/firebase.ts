@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'
+import 'firebase/auth'
 import 'firebase/firestore'
 
 const firebaseConfig = {
@@ -10,6 +11,11 @@ const firebaseConfig = {
 	appId: '1:153475777536:web:c46e066aa02ee3a4b744e5',
 }
 
-if (firebase.apps.length === 0) {
-	firebase.initializeApp(firebaseConfig)
-}
+const app =
+	firebase.apps.length === 0
+		? firebase.initializeApp(firebaseConfig)
+		: firebase.app()
+
+export const firebaseAuth = app.auth()
+
+export const firebaseAuthGithubProvider = new firebase.auth.GithubAuthProvider()
