@@ -22,5 +22,14 @@ export const ThemeProvider: React.FunctionComponent = ({ children }) => {
 		[prefersDarkMode],
 	)
 
-	return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+	return (
+		<MuiThemeProvider theme={theme}>
+			<style>{`
+				:root {
+					--global-themeColor: ${themeColor};
+				}
+			`}</style>
+			{children}
+		</MuiThemeProvider>
+	)
 }

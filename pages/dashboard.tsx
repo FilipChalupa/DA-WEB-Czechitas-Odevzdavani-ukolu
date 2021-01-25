@@ -12,10 +12,10 @@ import { blue, green, grey } from '@material-ui/core/colors'
 import React from 'react'
 import { LogOutButton } from '../components/LogOutButton'
 import { SignInButton } from '../components/SignInButton'
-import { useUser } from '../contexts/UserContext'
+import { useStudent } from '../contexts/UserContext'
 
 export default function Dashboard() {
-	const user = useUser()
+	const student = useStudent()
 
 	return (
 		<Container maxWidth="sm">
@@ -23,7 +23,7 @@ export default function Dashboard() {
 				Přehled
 			</Typography>
 
-			{user ? (
+			{student ? (
 				<>
 					<Typography variant="h5" gutterBottom>
 						Piškvorky
@@ -212,7 +212,7 @@ export default function Dashboard() {
 					<br />
 					<br />
 					<br />
-					<pre>{JSON.stringify(user, null, 2)}</pre>
+					<pre>{JSON.stringify(student, null, 2)}</pre>
 					<LogOutButton />
 				</>
 			) : (

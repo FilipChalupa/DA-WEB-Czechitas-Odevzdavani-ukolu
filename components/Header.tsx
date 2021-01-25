@@ -1,6 +1,7 @@
 import {
 	AppBar,
 	Avatar,
+	Badge,
 	Container,
 	Toolbar,
 	Typography,
@@ -24,10 +25,21 @@ export const Header: React.FunctionComponent = () => {
 							</a>
 						</Link>
 					</div>
-					{user && (
-						<a href={`https://github.com/${user.githubUsername}`}>
-							<Avatar src={user.avatar || undefined} />
-						</a>
+					{user && user.isStudent && (
+						<Avatar src={user.student.avatar || undefined} />
+					)}
+					{user && user.isAdmin && (
+						<Badge
+							overlap="circle"
+							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'right',
+							}}
+							badgeContent={<div className={s.adminBadge} />}
+							title="Admin"
+						>
+							<Avatar src={user.admin.avatar || undefined} />
+						</Badge>
 					)}
 				</Toolbar>
 			</Container>
