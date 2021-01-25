@@ -114,7 +114,7 @@ export default function Dashboard() {
 									Jane Doe
 								</Link>{' '}
 								<Button size="small" color="primary" variant="contained">
-									Komentáře jsem odeslala
+									Komentáře odeslány
 								</Button>
 							</Typography>
 							<Typography variant="body2" color="textSecondary" component="p">
