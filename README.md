@@ -20,3 +20,9 @@ git push origin HEAD:deploy/praha-jaro-2021
 ```bash
 git push origin HEAD:deploy/brno-jaro-2021
 ```
+
+### Jarní běh 2021 v Českých Budějovicích ([czechitas-ukoly-budejovice.vercel.app](https://czechitas-ukoly-budejovice.vercel.app/))
+
+```bash
+git push origin HEAD:deploy/budejovice-jaro-2021
+```
