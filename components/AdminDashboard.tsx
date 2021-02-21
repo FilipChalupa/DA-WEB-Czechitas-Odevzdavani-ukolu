@@ -1,6 +1,9 @@
 import { Link, MenuItem, Select } from '@material-ui/core'
 import { CellParams, ColDef, DataGrid } from '@material-ui/data-grid'
 import React from 'react'
+import { update } from 'typesaurus'
+import { useCourse } from '../contexts/CourseContext'
+import { studentsCollection } from '../utils/db'
 import { useStudents } from '../utils/useStudents'
 
 type TaskId = 1 | 2 | 3 | 4 | 5
@@ -32,6 +35,7 @@ const renderDateCell = (parameters: CellParams) => (
 
 export const AdminDashboard: React.FunctionComponent = ({}) => {
 	const students = useStudents()
+	const courseId = useCourse().id
 
 	const findStudent = React.useCallback(
 		(id: string) => students.find((student) => student.id === id),
@@ -59,41 +63,42 @@ export const AdminDashboard: React.FunctionComponent = ({}) => {
 	)
 
 	const renderRevieweeSelect = React.useCallback(
-		(taskId: TaskId, reviewerId: string, revieweeId: string | undefined) => {
-			return (
-				<div>
-					<Select
-						value={revieweeId || ''}
-						onChange={() => {
-							console.log('@TODO')
-						}}
-						style={{
-							minWidth: '80px',
-						}}
-					>
-						<MenuItem value="">
-							<i>Nikdo</i>
+		(taskId: TaskId, reviewerId: string, revieweeId: string | undefined) => (
+			<Select
+				value={revieweeId || ''}
+				onChange={(event) => {
+					const { value } = event.target
+					if (typeof value === 'string') {
+						update(studentsCollection(courseId), reviewerId, {
+							[`task${taskId}Reviewee` as any]: value || undefined,
+						})
+					}
+				}}
+				style={{
+					minWidth: '80px',
+				}}
+			>
+				<MenuItem value="">
+					<i>Nikdo</i>
+				</MenuItem>
+				{students
+					.filter(
+						(student) =>
+							student.id !== reviewerId &&
+							students.find(
+								(x) =>
+									(x as any)[`task${taskId}Reviewee`] === student.id &&
+									student.id !== revieweeId,
+							) === undefined,
+					)
+					.map((student) => (
+						<MenuItem key={student.id} value={student.id}>
+							{student.name}
 						</MenuItem>
-						{students
-							.filter(
-								(student) =>
-									student.id !== reviewerId &&
-									students.find(
-										(x) =>
-											(x as any)[`task${taskId}Reviewee`] === student.id &&
-											student.id !== revieweeId,
-									) === undefined,
-							)
-							.map((student) => (
-								<MenuItem key={student.id} value={student.id}>
-									{student.name}
-								</MenuItem>
-							))}
-					</Select>
-				</div>
-			)
-		},
-		[students],
+					))}
+			</Select>
+		),
+		[students, courseId],
 	)
 
 	const renderRevieweeCell = React.useCallback(
