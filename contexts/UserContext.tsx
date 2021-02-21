@@ -4,7 +4,7 @@ import { Admin, Student, studentsCollection } from '../utils/db'
 import { firebase, firebaseAuth } from '../utils/firebase'
 import { useCourse } from './CourseContext'
 
-type Value =
+type User =
 	| {
 			isStudent: true
 			isAdmin: false
@@ -17,12 +17,12 @@ type Value =
 	  }
 	| null
 
-const UserContext = React.createContext<Value>(null)
+const UserContext = React.createContext<User>(null)
 
 const firebaseUserToCustom = async (
 	courseId: string,
 	user: null | firebase.User,
-): Promise<Value> => {
+): Promise<User> => {
 	if (user === null) {
 		return null
 	}
@@ -49,7 +49,7 @@ const firebaseUserToCustom = async (
 }
 
 export const UserContextProvider: React.FunctionComponent = ({ children }) => {
-	const [user, setUser] = React.useState<Value>(null)
+	const [user, setUser] = React.useState<User>(null)
 	const courseId = useCourse().id
 
 	React.useEffect(() => {
@@ -62,7 +62,7 @@ export const UserContextProvider: React.FunctionComponent = ({ children }) => {
 	return <UserContext.Provider value={user}>{children}</UserContext.Provider>
 }
 
-export const useUser = (): Value => React.useContext(UserContext)
+export const useUser = (): User => React.useContext(UserContext)
 
 export const useStudent = (): null | Student => {
 	const value = React.useContext(UserContext)

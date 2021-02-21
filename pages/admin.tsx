@@ -1,5 +1,6 @@
 import { Container, Typography } from '@material-ui/core'
 import React from 'react'
+import { AdminDashboard } from '../components/AdminDashboard'
 import { LogOutButton } from '../components/LogOutButton'
 import { SignInWithGithubButton } from '../components/SignInWithGithubButton'
 import { useCourse } from '../contexts/CourseContext'
@@ -14,6 +15,7 @@ export default function Admin() {
 			{admin ? (
 				<>
 					<Typography variant="h3">Admin</Typography>
+					<AdminDashboard />
 					<LogOutButton />
 				</>
 			) : (
