@@ -1,11 +1,13 @@
-import { Link } from '@material-ui/core'
+import { Link, MenuItem, Select } from '@material-ui/core'
 import { CellParams, ColDef, DataGrid } from '@material-ui/data-grid'
 import React from 'react'
 import { useStudents } from '../utils/useStudents'
 
+type TaskId = 1 | 2 | 3 | 4 | 5
+
 const segmentedTasks = Array(5)
 	.fill(null)
-	.map((_, i) => i + 1)
+	.map((_, i) => (i + 1) as TaskId)
 
 const createGapColumn = (id: string | number): ColDef => ({
 	field: `gap-${id}`,
@@ -56,6 +58,55 @@ export const AdminDashboard: React.FunctionComponent = ({}) => {
 		[students, findStudent],
 	)
 
+	const renderRevieweeSelect = React.useCallback(
+		(taskId: TaskId, reviewerId: string, revieweeId: string | undefined) => {
+			return (
+				<div>
+					<Select
+						value={revieweeId || ''}
+						onChange={() => {
+							console.log('@TODO')
+						}}
+						style={{
+							minWidth: '80px',
+						}}
+					>
+						<MenuItem value="">
+							<i>Nikdo</i>
+						</MenuItem>
+						{students
+							.filter(
+								(student) =>
+									student.id !== reviewerId &&
+									students.find(
+										(x) =>
+											(x as any)[`task${taskId}Reviewee`] === student.id &&
+											student.id !== revieweeId,
+									) === undefined,
+							)
+							.map((student) => (
+								<MenuItem key={student.id} value={student.id}>
+									{student.name}
+								</MenuItem>
+							))}
+					</Select>
+				</div>
+			)
+		},
+		[students],
+	)
+
+	const renderRevieweeCell = React.useCallback(
+		(taskId: TaskId) => (parameters: CellParams) => {
+			return renderRevieweeSelect(
+				taskId,
+				parameters.row.id as string,
+				parameters.value as string | undefined,
+			)
+		},
+		[renderRevieweeSelect],
+	)
+
 	const columns = React.useMemo<ColDef[]>(
 		() => [
 			{ field: 'name', headerName: 'Jméno' },
@@ -97,7 +148,7 @@ export const AdminDashboard: React.FunctionComponent = ({}) => {
 				{
 					field: `task${i}Reviewee`,
 					headerName: `${i}. píše review pro`,
-					renderCell: renderStudentNameCell,
+					renderCell: renderRevieweeCell(i),
 				},
 				{
 					field: `task${i}ReviewDone`,
