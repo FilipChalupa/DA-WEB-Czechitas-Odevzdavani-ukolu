@@ -1,4 +1,5 @@
 import App, { AppContext, AppProps } from 'next/app'
+import Head from 'next/head'
 import { get } from 'typesaurus'
 import { Layout } from '../components/Layout'
 import { ThemeProvider } from '../components/ThemeProvider'
@@ -19,6 +20,9 @@ function MyApp({
 			<CourseContextProvider course={course}>
 				<UserContextProvider>
 					<Layout>
+						<Head>
+							<title>Odevzdávání úkolů</title>
+						</Head>
 						<Component {...pageProps} />
 					</Layout>
 				</UserContextProvider>
