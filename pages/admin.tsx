@@ -14,8 +14,11 @@ export default function Admin() {
 		<Container>
 			{admin ? (
 				<>
-					<Typography variant="h3">Admin</Typography>
+					<Typography variant="h3" gutterBottom>
+						Admin
+					</Typography>
 					<AdminDashboard />
+					<br />
 					<LogOutButton />
 				</>
 			) : (
