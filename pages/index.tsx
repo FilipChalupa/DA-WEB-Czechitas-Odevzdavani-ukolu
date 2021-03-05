@@ -12,7 +12,7 @@ export default function Home() {
 	const router = useRouter()
 
 	if (user) {
-		if ('isAdmin' in user) {
+		if (user.isAdmin) {
 			router.push('/admin')
 		} else {
 			router.push('/dashboard')
